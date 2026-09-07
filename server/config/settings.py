@@ -56,7 +56,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STORAGES = {'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
-            'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'}}
+            'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage' if TESTING else 'whitenoise.storage.CompressedManifestStaticFilesStorage'}}
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = CSRF_COOKIE_SECURE = not LOCAL
 SESSION_COOKIE_SAMESITE = CSRF_COOKIE_SAMESITE = 'Lax'

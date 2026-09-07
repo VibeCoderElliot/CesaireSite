@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block content %}<section class="panel narrow"><h1>{{ heading|default:"Césaire Stages" }}</h1><p class="spacing">{{ text }}</p><a class="button spacing" href="{% url 'login' %}">Se connecter</a><a class="secondary spacing" href="{% url 'home' %}">Retour au catalogue</a></section>{% endblock %}

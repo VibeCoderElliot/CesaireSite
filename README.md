@@ -1,6 +1,35 @@
 # Césaire Stages
 
-Projet indépendant pour accompagner les élèves du lycée Aimé Césaire. Interface française, responsive, sans dépendance ni service externe.
+Projet indépendant pour accompagner les élèves du lycée Aimé Césaire. Le dépôt contient deux versions clairement séparées :
+
+- la racine est le prototype statique actuellement publié par GitHub Pages ;
+- `server/` est la version serveur destinée au futur domaine.
+
+La version serveur utilise Django 5.2 LTS, PostgreSQL et Caddy. Elle comprend de vrais comptes avec confirmation email, des sessions sécurisées, des profils Élève et Organisation, des droits administrateur créés hors inscription publique, des organisations modérées, des demandes d'attribution, des stages, des favoris, des candidatures, une file d'emails, un journal administratif, l'export et la suppression du compte.
+
+La version serveur ne contient aucune entreprise fictive initiale et n'est pas encore connectée à un domaine ou un service SMTP. Voir [`server/DEPLOYMENT.md`](server/DEPLOYMENT.md) pour la procédure et les décisions à finaliser avant ouverture.
+
+## Développement de la version serveur
+
+```sh
+python -m venv .venv
+.venv/bin/pip install -r server/requirements.txt
+cd server
+APP_ENV=development ../.venv/bin/python manage.py migrate
+APP_ENV=development ../.venv/bin/python manage.py runserver
+```
+
+Tests et vérifications :
+
+```sh
+cd server
+APP_ENV=test ../.venv/bin/python manage.py test portal
+APP_ENV=development ../.venv/bin/python manage.py check
+```
+
+Les secrets et données locales sont exclus du dépôt. `.env.example` documente les variables requises sans valeurs réelles.
+
+## Prototype statique
 
 ## Ouvrir la version locale
 
@@ -34,4 +63,4 @@ On peut aussi créer une nouvelle organisation ; l'administration locale doit l'
 
 `node --check app.js` et `node --check model.js`
 
-Architecture : `data.js` conserve le catalogue d'origine, `model.js` contient les règles et transactions locales, `app.js` gère les routes par fragment et l'interface, `styles.css` porte les thèmes et adaptations mobiles. Aucun script de déploiement n'est ajouté.
+Architecture du prototype : `data.js` conserve le catalogue d'origine, `model.js` contient les règles et transactions locales, `app.js` gère les routes par fragment et l'interface, `styles.css` porte les thèmes et adaptations mobiles.

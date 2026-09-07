@@ -13,6 +13,7 @@ const offerValues = {orgId:'1',title:'Découverte du numérique',description:'Un
 test('seed preserves all original organizations and creates separate offers',()=>{
  const s=initial();assert.equal(s.orgs.length,ctx.seed.length);assert.equal(s.offers.length,ctx.seed.length);assert.ok(M.valid(s));
  assert.equal(s.orgs[0].name,ctx.seed[0].name);assert.ok(s.orgs.every(o=>!o.owner));
+ assert.ok(s.orgs.every(o=>Number.isFinite(o.latitude)&&Number.isFinite(o.longitude)));
 });
 test('favorites persist and toggle without duplicates',()=>{
  const db=storage();let s=M.transact(initial(),db,'favorite',{id:'offer-1'});

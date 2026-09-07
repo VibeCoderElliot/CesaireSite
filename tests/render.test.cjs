@@ -58,6 +58,7 @@ test('native forms and referenced assets exist without third-party requests',()=
 test('map renders real addresses and explicit fictional-offer labels',()=>{
  const r=runtime();
  assert.ok(r.run('mapView()').includes('OpenStreetMap'));
+ assert.ok(r.run('mapView()').includes('Google Maps'));
  assert.ok(r.run('mapView()').includes('Mairie de Clisson'));
  assert.ok(r.run('offerCard(state.offers[0])').includes('Offre fictive'));
  assert.ok(r.run("detail('offer-1')").includes('ne constitue pas un partenariat'));

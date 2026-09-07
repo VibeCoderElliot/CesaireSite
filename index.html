@@ -1,114 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <title>Stages Lille • Trouve ton stage facilement</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Césaire Stages : un projet pour accompagner les élèves du lycée Aimé Césaire dans leur recherche de stage.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="no-referrer"><meta name="theme-color" content="#142a43">
+<title>Césaire Stages · Lycée Aimé Césaire</title>
+<link rel="stylesheet" href="styles.css">
+<script src="data.js" defer></script><script src="model.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
-    <aside class="admin-panel" id="admin-panel">
-        <div class="admin-header">
-            <h2 class="admin-title">Admin Dashboard</h2>
-            <button class="admin-close" id="admin-close-button" type="button">✕</button>
-        </div>
-        <div class="admin-kpi-grid" id="admin-kpi-grid"></div>
-        <div class="sector-bars" id="admin-sector-bars"></div>
-        <div class="admin-list" id="admin-company-list"></div>
-    </aside>
-
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="metro-badge">
-                    <div class="metro-icon">M</div>
-                    Recherche par station de métro
-                </div>
-                <h1>Trouve ton stage à Lille</h1>
-                <p class="hero-subtitle">Recherche d'entreprises par proximité • Simple et rapide • Pour lycéens</p>
-                <button class="hero-mode-toggle" id="night-mode-toggle" type="button">🌙 Mode soirée</button>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="search-section">
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label for="metro-filter">🚇 Station de métro</label>
-                    <select id="metro-filter">
-                        <option value="">Toutes les stations</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="sector-filter">💼 Secteur d'activité</label>
-                    <select id="sector-filter">
-                        <option value="">Tous les secteurs</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="search-input">🔍 Recherche par nom</label>
-                    <input type="text" id="search-input" placeholder="Nom de l'entreprise...">
-                </div>
-            </div>
-            <button class="btn-search" id="search-button" type="button">Rechercher</button>
-        </div>
-    </div>
-
-    <section class="results-section">
-        <div class="container">
-            <div class="results-header">
-                <div class="results-count"><strong id="results-count">0</strong> opportunités de stage trouvées</div>
-            </div>
-            <div class="companies-grid" id="companies-grid"></div>
-        </div>
-    </section>
-
-    <section class="faq-section">
-        <div class="container">
-            <h2 class="faq-title">FAQ</h2>
-            <div class="faq-list">
-                <details class="faq-item">
-                    <summary>Comment postuler pour un stage ?</summary>
-                    <p>Ouvre la fiche d’une organisation, puis utilise l’email ou le téléphone indiqué pour candidater.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Est-ce que je peux filtrer par station de métro ?</summary>
-                    <p>Oui. Utilise le filtre « Station de métro » en haut de la page pour limiter les résultats.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Comment accéder à l’admin cachée ?</summary>
-                    <p>Utilise <strong>Ctrl+Shift+A</strong> puis saisis le code administrateur configuré côté navigateur.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Les nouvelles organisations sont-elles sauvegardées ?</summary>
-                    <p>Pour l’instant, elles restent en mémoire dans la session du navigateur (pas de base de données).</p>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <div class="modal" id="company-modal">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close-button" type="button">✕</button>
-            <div id="modal-body"></div>
-        </div>
-    </div>
-
-    <footer>
-        <p>Stages Lille • 2025 • Projet pour faciliter la recherche de stages obligatoires</p>
-        <p class="footer-note">
-            Des questions ? Contactez votre établissement ou <a href="mailto:contact@stages-lille.fr">contact@stages-lille.fr</a>
-        </p>
-    </footer>
-
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+<a class="skip" href="#main">Aller au contenu</a>
+<header class="header">
+<a class="brand" href="#explorer" aria-label="Césaire Stages, accueil"><span class="brand-mark">c.</span><span>Césaire<span class="brand-sub">STAGES · AIMÉ CÉSAIRE</span></span></a>
+<nav class="desktop-nav" aria-label="Navigation principale"><a href="#explorer">Explorer</a><a href="#organisations">Organisations</a><a href="#guide">Préparer son stage</a></nav>
+<div class="header-actions"><button class="icon-button" id="theme" aria-label="Changer le thème">◐</button><a class="button small" href="#espace">Mon espace ↗</a></div>
+</header>
+<div class="local-banner"><span class="badge">VERSION LOCALE</span><span>Enregistré dans ce navigateur uniquement. Aucun envoi réel. Utilisez des données fictives.</span></div>
+<main id="main" tabindex="-1"></main>
+<footer><a class="footer-brand" href="#explorer">Césaire Stages.</a><p>Un projet pour les élèves du lycée Aimé Césaire.<br>Initiative indépendante · Aucun partenariat officiel revendiqué.</p><a href="#confidentialite">Données & fonctionnement</a></footer>
+<nav class="mobile-nav" aria-label="Navigation mobile"><a href="#explorer"><span aria-hidden="true">⌕</span>Explorer</a><a href="#favoris"><span aria-hidden="true">♡</span>Favoris</a><a href="#candidatures"><span aria-hidden="true">▤</span>Suivi</a><a href="#espace"><span aria-hidden="true">◉</span>Espace</a></nav>
+<dialog id="dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title"></h2><button class="icon-button" id="close-dialog" aria-label="Fermer">×</button></div><div id="dialog-body"></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><p>Activez JavaScript pour utiliser la recherche et les espaces locaux.</p></noscript>
 </body>
 </html>

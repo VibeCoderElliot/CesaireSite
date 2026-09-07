@@ -64,3 +64,10 @@ On peut aussi créer une nouvelle organisation ; l'administration locale doit l'
 `node --check app.js` et `node --check model.js`
 
 Architecture du prototype : `data.js` conserve le catalogue d'origine, `model.js` contient les règles et transactions locales, `app.js` gère les routes par fragment et l'interface, `styles.css` porte les thèmes et adaptations mobiles.
+
+
+### Carte et données de démonstration
+
+La version serveur inclut une carte interne sans traceur externe. Les coordonnées sont stockées avec les organisations et les liens détaillés ouvrent OpenStreetMap.
+
+Un jeu facultatif contient quatre organisations et adresses publiques réelles à Clisson, accompagnées d’offres explicitement fictives. Il ne revendique aucun partenariat et ne se charge jamais automatiquement. Depuis server, utilisez python manage.py seed_demo pour l’ajouter et python manage.py seed_demo --clear pour le retirer.

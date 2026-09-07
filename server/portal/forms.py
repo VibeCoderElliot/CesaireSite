@@ -35,7 +35,7 @@ class OrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
         fields = ('name','registration_id','sector','metro','address','description','email','phone')
-        labels = {'name':'Nom','sector':'Secteur','metro':'Station de métro','address':'Adresse','description':'Présentation','email':'Email de contact','phone':'Téléphone'}
+        labels = {'name':'Nom','sector':'Secteur','metro':'Accès / transports','address':'Adresse','description':'Présentation','email':'Email de contact','phone':'Téléphone'}
 
 class InternshipForm(forms.ModelForm):
     class Meta:

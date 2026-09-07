@@ -1,1 +1,8 @@
-<article class="card"><div class="card-top"><span class="monogram" aria-hidden="true">{{ offer.organization.name|slice:":2"|upper }}</span><span class="tag">{{ offer.organization.sector }}</span></div><h3><a href="{% url 'detail' offer.pk %}">{{ offer.title }}</a></h3><p class="org-name">{{ offer.organization.name }}</p><p class="description">{{ offer.description }}</p><div class="meta"><span>Ⓜ {{ offer.organization.metro|default:"Accès à préciser" }}</span><span>{{ offer.start|date:"d M Y" }} — {{ offer.end|date:"d M Y" }}</span></div><div class="card-bottom"><span class="tag">{{ offer.capacity }} place{{ offer.capacity|pluralize }}</span><a href="{% url 'detail' offer.pk %}">Voir le stage ↗</a></div></article>
+<article class="card">
+  <div class="card-top"><span class="monogram" aria-hidden="true">{{ offer.organization.name|slice:":2"|upper }}</span><span class="tag">{{ offer.organization.sector }}</span></div>
+  {% if offer.is_demo %}<span class="demo-label">Offre fictive · démonstration</span>{% endif %}
+  <h3><a href="{% url 'detail' offer.pk %}">{{ offer.title }}</a></h3>
+  <p class="org-name">{{ offer.organization.name }}</p><p class="description">{{ offer.description }}</p>
+  <div class="meta"><span>⌖ {{ offer.organization.metro|default:"Accès à préciser" }}</span><span>{{ offer.start|date:"d M Y" }} — {{ offer.end|date:"d M Y" }}</span></div>
+  <div class="card-bottom"><span class="tag">{{ offer.capacity }} place{{ offer.capacity|pluralize }}</span><a href="{% url 'detail' offer.pk %}">Voir le stage ↗</a></div>
+</article>

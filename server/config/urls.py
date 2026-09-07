@@ -5,7 +5,7 @@ from portal import views as v
 
 urlpatterns = [
     path('',v.home,name='home'), path('healthz/',v.health,name='health'), path('stages/<int:pk>/',v.detail,name='detail'),
-    path('organisations/',v.organizations,name='organizations'),path('guide/',v.guide,name='guide'),path('donnees/',v.privacy,name='privacy'),
+    path('organisations/',v.organizations,name='organizations'),path('carte/',v.map_view,name='map'),path('guide/',v.guide,name='guide'),path('donnees/',v.privacy,name='privacy'),
     path('compte/inscription/',v.register,name='register'),path('compte/connexion/',v.LoginView.as_view(),name='login'),
     path('compte/deconnexion/',auth.LogoutView.as_view(),name='logout'),path('compte/verification/<str:token>/',v.verify,name='verify'),
     path('compte/renvoyer/',v.resend,name='resend'),

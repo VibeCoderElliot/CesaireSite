@@ -63,3 +63,10 @@ Après une restauration, appliquer les migrations avec `docker compose run --rm 
 ## 6. Retour arrière
 
 Conserver l'image précédente et la dernière sauvegarde validée. Si une mise à jour échoue, arrêter l'ouverture au public, restaurer la version applicative précédente et, uniquement si la migration a modifié les données de façon incompatible, restaurer la base vérifiée. Ne réécrivez pas une migration déjà appliquée : ajoutez une migration corrective.
+
+
+## Données de démonstration facultatives
+
+Après les migrations, python manage.py seed_demo ajoute quatre adresses publiques réelles autour de Clisson et des offres fictives clairement signalées. Cette commande est facultative et idempotente. python manage.py seed_demo --clear retire uniquement ces données.
+
+Avant toute communication publique, contactez les organisations concernées ou retirez ces fiches. Une organisation réelle qui a déjà été créée hors démonstration n’est jamais modifiée par la commande.

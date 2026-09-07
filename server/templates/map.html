@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% block title %}Carte des organisations · Césaire Stages{% endblock %}{% block content %}
+<div class="page-title"><span class="eyebrow">AUTOUR DU LYCÉE AIMÉ CÉSAIRE</span><h1>Les organisations sur la carte.</h1><p>Les positions correspondent aux adresses publiques des organisations. Les offres marquées « fictives » servent uniquement à la démonstration et n’indiquent aucun partenariat.</p></div>
+<div class="map-layout">
+  <section class="panel map-panel" aria-label="Carte schématique des organisations">
+    {% if organizations %}<svg viewBox="0 0 100 100" role="img" aria-labelledby="map-title map-desc">
+      <title id="map-title">Carte des organisations autour de Clisson</title><desc id="map-desc">Carte schématique. La liste qui suit donne toutes les adresses sous forme textuelle.</desc>
+      <path class="map-water" d="M-5 73 C18 54 27 75 46 56 S75 43 105 23"/><path class="map-road" d="M3 20 C27 33 38 32 55 48 S77 79 102 86"/><path class="map-road" d="M16 101 C30 73 48 66 65 37 S82 12 91 -4"/>
+      {% for org in organizations %}<a href="#organisation-{{ org.pk }}" class="map-marker"><circle cx="{{ org.map_x|stringformat:'.2f' }}" cy="{{ org.map_y|stringformat:'.2f' }}" r="3.4"/><text x="{{ org.map_x|stringformat:'.2f' }}" y="{{ org.map_y|stringformat:'.2f' }}" dx="4.6" dy="1.5">{{ org.name|truncatechars:24 }}</text></a>{% endfor %}
+    </svg>{% else %}<div class="empty"><h2>Aucune position disponible.</h2><p>Les organisations apparaîtront ici lorsque leur adresse aura été positionnée.</p></div>{% endif %}
+  </section>
+  <section class="map-list" aria-label="Adresses">{% for org in organizations %}<article class="map-item" id="organisation-{{ org.pk }}">
+    {% if org.is_demo %}<span class="demo-label">Fiche de démonstration</span>{% endif %}<h2>{{ org.name }}</h2><p>{{ org.address }}</p><p>{{ org.metro }}</p>
+    <a href="{{ org.osm_url }}" target="_blank" rel="noopener noreferrer">Ouvrir dans OpenStreetMap ↗</a>{% if org.source_url %}<br><a href="{{ org.source_url }}" target="_blank" rel="noopener noreferrer">Source de l’adresse ↗</a>{% endif %}
+  </article>{% empty %}{% endfor %}</section>
+</div>
+{% endblock %}

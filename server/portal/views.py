@@ -63,6 +63,19 @@ def detail(request,pk):
 def organizations(request):
     return render(request,'organizations.html',{'organizations':Organization.objects.filter(status='approved')[:200]})
 
+def map_view(request):
+    organizations=list(Organization.objects.filter(status='approved',latitude__isnull=False,longitude__isnull=False)[:200])
+    if organizations:
+        lats=[float(org.latitude) for org in organizations]
+        lons=[float(org.longitude) for org in organizations]
+        min_lat,max_lat=min(lats),max(lats);min_lon,max_lon=min(lons),max(lons)
+        lat_span=max(max_lat-min_lat,.002);lon_span=max(max_lon-min_lon,.002)
+        for org in organizations:
+            org.map_x=8+84*(float(org.longitude)-min_lon)/lon_span
+            org.map_y=8+84*(max_lat-float(org.latitude))/lat_span
+            org.osm_url=f'https://www.openstreetmap.org/?mlat={org.latitude}&mlon={org.longitude}#map=17/{org.latitude}/{org.longitude}'
+    return render(request,'map.html',{'organizations':organizations})
+
 class LoginView(auth_views.LoginView):
     template_name='registration/login.html'
     authentication_form=LoginForm

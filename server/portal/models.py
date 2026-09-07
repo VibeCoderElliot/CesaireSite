@@ -24,6 +24,10 @@ class Organization(models.Model):
     description = models.TextField(max_length=2000)
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=40, blank=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    source_url = models.URLField('Source de l’adresse', blank=True)
+    is_demo = models.BooleanField('Fiche de démonstration', default=False)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name='organizations')
     status = models.CharField(max_length=12, choices=[('pending','En attente'),('approved','Approuvée'),('rejected','Refusée'),('blocked','Suspendue')], default='pending', db_index=True)
     featured = models.BooleanField(default=False)
@@ -56,6 +60,7 @@ class Internship(models.Model):
     capacity = models.PositiveSmallIntegerField(default=1)
     schedule = models.CharField(max_length=120, blank=True)
     status = models.CharField(max_length=12, choices=[('draft','Brouillon'),('published','Publié'),('paused','En pause'),('archived','Archivé')], default='draft', db_index=True)
+    is_demo = models.BooleanField('Offre fictive de démonstration', default=False)
     created = models.DateTimeField(auto_now_add=True)
     class Meta:
         ordering = ['-created']

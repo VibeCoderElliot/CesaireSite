@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.core import mail, signing
 from django.core.exceptions import ValidationError
+from django.core.management import call_command
 from .models import User, Organization, Internship, Application, Claim, Favorite, RateBucket
 from .services import change_application, apply_to_offer, review_claim, rate_limit
 
@@ -20,7 +21,7 @@ class PortalTests(TestCase):
 
     def login(self,user): self.client.force_login(user)
     def test_public_catalog_and_templates(self):
-        for url in ['/',reverse('detail',args=[self.offer.pk]),reverse('organizations'),reverse('guide'),reverse('privacy'),reverse('login'),reverse('register'),reverse('resend'),reverse('password_reset')]:
+        for url in ['/',reverse('detail',args=[self.offer.pk]),reverse('organizations'),reverse('map'),reverse('guide'),reverse('privacy'),reverse('login'),reverse('register'),reverse('resend'),reverse('password_reset')]:
             self.assertEqual(self.client.get(url).status_code,200,url)
         self.assertContains(self.client.get('/'),'Test stage')
         self.assertEqual(self.client.get(reverse('health')).json(),{'status':'ok'})
@@ -140,3 +141,19 @@ class PortalTests(TestCase):
         # ModelForm catches the uniqueness constraint before the database write.
         self.assertEqual(response.status_code,200)
         self.assertContains(response,'existe déjà')
+
+    def test_map_only_shows_approved_located_organizations(self):
+        self.org.latitude='47.087000';self.org.longitude='-1.281000';self.org.save()
+        hidden=Organization.objects.create(name='Masquée',sector='Test',address='Adresse',description='Test',status='pending',latitude='47.1',longitude='-1.2')
+        response=self.client.get(reverse('map'))
+        self.assertContains(response,'Test org');self.assertNotContains(response,hidden.name)
+        self.assertContains(response,'openstreetmap.org')
+
+    def test_demo_seed_is_explicit_labeled_and_idempotent(self):
+        call_command('seed_demo');call_command('seed_demo')
+        self.assertEqual(Organization.objects.filter(is_demo=True).count(),4)
+        self.assertEqual(Internship.objects.filter(is_demo=True).count(),4)
+        response=self.client.get('/')
+        self.assertContains(response,'Offre fictive')
+        detail=self.client.get(reverse('detail',args=[Internship.objects.filter(is_demo=True).first().pk]))
+        self.assertContains(detail,'ne constitue pas un partenariat')

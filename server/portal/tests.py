@@ -148,6 +148,7 @@ class PortalTests(TestCase):
         response=self.client.get(reverse('map'))
         self.assertContains(response,'Test org');self.assertNotContains(response,hidden.name)
         self.assertContains(response,'openstreetmap.org')
+        self.assertContains(response,'google.com/maps/search')
 
     def test_demo_seed_is_explicit_labeled_and_idempotent(self):
         call_command('seed_demo');call_command('seed_demo')

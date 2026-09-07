@@ -2,23 +2,23 @@
 
 // Device-local prototype. Roles organize workflows, not a security boundary.
 const CesaireModel = (() => {
-  const KEY = 'cesaire_stages_v1';
+  const KEY = 'cesaire_stages_v2';
   const copy = value => JSON.parse(JSON.stringify(value));
   const uid = () => globalThis.crypto?.randomUUID?.() || `id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
   const clean = (value, max = 1000) => String(value || '').trim().slice(0, max);
   const normalize = value => clean(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const date = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
   function initial(companies) {
-    return {version:1, current:'student', profiles:[
+    return {version:2, current:'student', profiles:[
       {id:'student', name:'Élève exemple', role:'student', classroom:'', interests:''},
       {id:'representative', name:'Représentant exemple', role:'representative'},
       {id:'admin', name:'Administration locale', role:'admin'}
-    ], orgs:companies.map(c => ({id:String(c.id),name:c.name,sector:c.sector,metro:c.metro,address:c.address,description:c.description,email:c.email,phone:c.phone,status:'approved',owner:null,sample:true,featured:!!c.isFeatured})),
+    ], orgs:companies.map(c => ({id:String(c.id),name:c.name,sector:c.sector,metro:c.metro,address:c.address,description:c.description,email:c.email,phone:c.phone,latitude:c.latitude,longitude:c.longitude,source:c.source,status:'approved',owner:null,sample:true,featured:!!c.isFeatured})),
     offers:companies.map(c => ({id:`offer-${c.id}`,orgId:String(c.id),title:`Stage découverte · ${c.sector}`,description:c.description,tasks:c.tasks.join('\n'),requirements:c.requirements.join('\n'),duration:c.duration,schedule:c.schedule,start:'',end:'',capacity:1,status:'published',created:new Date().toISOString(),sample:true})),
     claims:[],applications:[],favorites:[],log:[]};
   }
   function valid(s) {
-    return s && s.version === 1 && ['profiles','orgs','offers','claims','applications','favorites','log'].every(k=>Array.isArray(s[k])) &&
+    return s && s.version === 2 && ['profiles','orgs','offers','claims','applications','favorites','log'].every(k=>Array.isArray(s[k])) &&
       s.profiles.some(p=>p.id===s.current) && s.profiles.every(p=>typeof p.id==='string' && ['admin','student','representative'].includes(p.role)) &&
       s.orgs.every(o=>typeof o.id==='string' && typeof o.name==='string') &&
       s.offers.every(o=>typeof o.id==='string' && typeof o.orgId==='string' && s.orgs.some(g=>g.id===o.orgId));

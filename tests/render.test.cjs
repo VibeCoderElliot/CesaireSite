@@ -19,7 +19,7 @@ test('all routes render for each local role without runtime errors',()=>{
  const r=runtime();
  for(const profile of ['student','representative','admin']){
   r.run(`state.current='${profile}'`);
-  for(const route of ['explorer','organisations','organisation/1','stage/offer-1','favoris','candidatures','espace','guide','confidentialite','missing']){
+  for(const route of ['explorer','carte','organisations','organisation/1','stage/offer-1','favoris','candidatures','espace','guide','confidentialite','missing']){
    r.context.location.hash='#'+route;r.run('render()');
    assert.ok(r.elements.get('#main').innerHTML.length>100,profile+':'+route);
    assert.ok(!r.elements.get('#main').innerHTML.includes('undefined'),profile+':'+route);
@@ -28,7 +28,7 @@ test('all routes render for each local role without runtime errors',()=>{
 });
 test('filter by accented sector, dates and query works',()=>{
  const r=runtime();
- r.run("filters.query='medecine'");assert.ok(r.run('filterResults().length')>0);
+ r.run("filters.query='education'");assert.ok(r.run('filterResults().length')>0);
  r.run("filters.start='2099-01-01'");assert.equal(r.run('filterResults().length'),0);
  r.run("filters.start='';filters.query='no such company 987'");assert.equal(r.run('filterResults().length'),0);
 });
@@ -54,4 +54,12 @@ test('native forms and referenced assets exist without third-party requests',()=
  assert.ok(r.elements.get('#dialog-body').innerHTML.includes('data-form="org-save"'));
  r.run("state.current='admin';offerForm('1')");
  assert.ok(r.elements.get('#dialog-body').innerHTML.includes('type="date"'));
+});
+test('map renders real addresses and explicit fictional-offer labels',()=>{
+ const r=runtime();
+ assert.ok(r.run('mapView()').includes('OpenStreetMap'));
+ assert.ok(r.run('mapView()').includes('Google Maps'));
+ assert.ok(r.run('mapView()').includes('Mairie de Clisson'));
+ assert.ok(r.run('offerCard(state.offers[0])').includes('Offre fictive'));
+ assert.ok(r.run("detail('offer-1')").includes('ne constitue pas un partenariat'));
 });

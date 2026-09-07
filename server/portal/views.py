@@ -12,6 +12,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_POST, require_http_methods
+from urllib.parse import quote_plus
 from .models import User, Organization, Internship, Application, Claim, Favorite
 from .forms import RegisterForm, LoginForm, ProfileForm, OrganizationForm, InternshipForm, ClaimForm, ApplicationForm, ReviewForm
 from .services import can_manage, check_manager, check_admin, rate_limit, request_claim, review_claim, apply_to_offer, change_application, save_offer, audit
@@ -74,6 +75,7 @@ def map_view(request):
             org.map_x=8+84*(float(org.longitude)-min_lon)/lon_span
             org.map_y=8+84*(max_lat-float(org.latitude))/lat_span
             org.osm_url=f'https://www.openstreetmap.org/?mlat={org.latitude}&mlon={org.longitude}#map=17/{org.latitude}/{org.longitude}'
+            org.google_maps_url='https://www.google.com/maps/search/?api=1&query='+quote_plus(f'{org.name}, {org.address}')
     return render(request,'map.html',{'organizations':organizations})
 
 class LoginView(auth_views.LoginView):

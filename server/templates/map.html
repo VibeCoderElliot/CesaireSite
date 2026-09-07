@@ -10,7 +10,7 @@
   </section>
   <section class="map-list" aria-label="Adresses">{% for org in organizations %}<article class="map-item" id="organisation-{{ org.pk }}">
     {% if org.is_demo %}<span class="demo-label">Fiche de démonstration</span>{% endif %}<h2>{{ org.name }}</h2><p>{{ org.address }}</p><p>{{ org.metro }}</p>
-    <a href="{{ org.osm_url }}" target="_blank" rel="noopener noreferrer">Ouvrir dans OpenStreetMap ↗</a>{% if org.source_url %}<br><a href="{{ org.source_url }}" target="_blank" rel="noopener noreferrer">Source de l’adresse ↗</a>{% endif %}
+    <div class="map-links"><a href="{{ org.google_maps_url }}" target="_blank" rel="noopener noreferrer">Google Maps ↗</a><a href="{{ org.osm_url }}" target="_blank" rel="noopener noreferrer">OpenStreetMap ↗</a></div>{% if org.source_url %}<a href="{{ org.source_url }}" target="_blank" rel="noopener noreferrer">Source de l’adresse ↗</a>{% endif %}
   </article>{% empty %}{% endfor %}</section>
 </div>
 {% endblock %}
